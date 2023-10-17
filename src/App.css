@@ -1,0 +1,29 @@
+* {
+    margin: auto;
+}
+
+.task {
+    display: flex;
+    flex-direction: column;
+    align-items: center;;
+    border-radius: 10px;
+    /* border: solid 3px rgb(197, 197, 197); */
+    margin: 10px 0;
+    width: 400px;
+    cursor: pointer;
+    /* background: linear-gradient(to right, #ff7e5f, #feb47b); */
+    background:#ffdbc4;
+}
+
+.taskList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right, #5067ff, #dce4ff);
+    padding-top: 10px;
+}
+
+.done {
+    color: rgb(1, 199, 1);
+    text-decoration:line-through;
+}
