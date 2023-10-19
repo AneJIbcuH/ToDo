@@ -4,6 +4,11 @@ export type subTask = {
   done: boolean
 }
 
+export type dragTask = {
+  id: number,
+  status: string
+}
+
 export type Task = {
   id: number;
   title: string;
@@ -12,13 +17,14 @@ export type Task = {
   subTasks: subTask[];
   timeInDev?: string;
   timeEndDev?: string;
+  status?: string;
 };
 
 export enum ActionTypes {
   ADD_ITEM = "ADD_ITEM",
   CHANGE_ITEM = 'CHANGE_ITEM',
   REMOVE_ITEM = "REMOVE_ITEM",
-  REMOVE_SUBITEM = "REMOVE_SUBITEM",
+  DRAG_ITEM = "DRAG_ITEM",
 }
 
 export type AddItemAction = {
@@ -36,4 +42,9 @@ export type RemoveItemAction = {
   payload: number; // id
 };
 
-export type Action = AddItemAction | ChangeItemAction | RemoveItemAction
+export type DragItemAction = {
+  type: ActionTypes.DRAG_ITEM;
+  payload: dragTask; // id status
+};
+
+export type Action = AddItemAction | ChangeItemAction | RemoveItemAction | DragItemAction

@@ -21,6 +21,17 @@ const reducer = (state = initialState, action: Action): Task[] => {
       return updatedArray;
     case ActionTypes.REMOVE_ITEM:
       return state.filter((item) => item.id !== action.payload);
+    case ActionTypes.DRAG_ITEM:
+      const dragArray = state.map((item) => {
+        if (item.id === action.payload.id) {
+          return {
+            ...item,
+            status: action.payload.status
+          };
+        }
+        return item;
+      });
+      return dragArray;
     default:
       return state;
   }
