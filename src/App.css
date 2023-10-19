@@ -12,7 +12,7 @@
     width: 400px;
     cursor: pointer;
     /* background: linear-gradient(to right, #ff7e5f, #feb47b); */
-    background:#ffdbc4;
+    background:#d9d9d9;
 }
 
 .taskList {
@@ -23,7 +23,32 @@
     padding-top: 10px;
 }
 
-.done {
+.subTaskdone {
     color: rgb(1, 199, 1);
     text-decoration:line-through;
+}
+
+.status {
+    background: #000;
+    width: 100%;
+    height: 300px;
+    display: flex;
+}
+
+.queue {
+    background: #fd4d4d;
+    width: 33%;
+    height: 250px;
+}
+
+.development {
+    background: #ffd342;
+    width: 33%;
+    height: 250px;
+}
+
+.done {
+    background: #a1ff7c;
+    width: 33%;
+    height: 250px;
 }

@@ -73,7 +73,6 @@ const MyTask: React.FC = () => {
       return el
     });
     setNewSubTasks(arr);
-    console.log(moment(1697555774635).fromNow())
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -136,7 +135,7 @@ const MyTask: React.FC = () => {
           value={subTask}
         />
         {newSubTasks?.map((el: subTask) => (
-          <p className={el.done ? 'done' : ''}>
+          <p className={el.done ? 'subTaskdone' : ''}>
             {el.subtask} - id - {el.id} -
             <Button
               onClick={(e) => removeSubTask(e.currentTarget.value)}
@@ -161,10 +160,9 @@ const MyTask: React.FC = () => {
       <p>Заголовок: {task?.title}</p>
       <p>Описание: {task?.description}</p>
       <p>Задача создана : {task?.dateCreat}</p>
-      <p>Задача в работе1 : {moment(task?.dateCreat).fromNow()}</p>
-      <p>Задача в работе2: {task?.timeInDev}</p>
+      <p>Задача в работе : {moment(task?.id).fromNow().slice(0, -3)}</p>
       {task?.subTasks.map((el: subTask) => (
-        <p id={el.id}>
+        <p id={el.id} className={el.done ? 'subTaskdone' : ''}>
           - {el.subtask} - id - {el.id}
         </p>
       ))}
