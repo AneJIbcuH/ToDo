@@ -33,7 +33,7 @@ const MyTask: React.FC = () => {
       id: task.id,
       title: newTitle,
       description: newDescription,
-      dateCreat: task.dateCreat,
+      // dateCreat: task.dateCreat,
       subTasks: newSubTasks,
     };
     const changeItemAction: Action = {
@@ -67,10 +67,10 @@ const MyTask: React.FC = () => {
       if (el.id == idSubTask) {
         return {
           ...el,
-          done: !el.done
-        }
+          done: !el.done,
+        };
       }
-      return el
+      return el;
     });
     setNewSubTasks(arr);
   }
@@ -135,7 +135,7 @@ const MyTask: React.FC = () => {
           value={subTask}
         />
         {newSubTasks?.map((el: subTask) => (
-          <p className={el.done ? 'subTaskdone' : ''}>
+          <p className={el.done ? "subTaskdone" : ""}>
             {el.subtask} - id - {el.id} -
             <Button
               onClick={(e) => removeSubTask(e.currentTarget.value)}
@@ -159,10 +159,15 @@ const MyTask: React.FC = () => {
       />
       <p>Заголовок: {task?.title}</p>
       <p>Описание: {task?.description}</p>
+      <p>Статус: {task?.status}</p>
+      {task?.status == "done" ? (
+        <p>Задача была выполнена : {new Date(task?.timeEndDev).toLocaleString()} за {(task?.timeEndDev - task.id) / 1000} секунд</p>
+      ) : (
+        <p>Задача в работе : {moment(task?.id).fromNow().slice(0, -3)}</p>
+      )}
       <p>Задача создана : {task?.dateCreat}</p>
-      <p>Задача в работе : {moment(task?.id).fromNow().slice(0, -3)}</p>
       {task?.subTasks.map((el: subTask) => (
-        <p id={el.id} className={el.done ? 'subTaskdone' : ''}>
+        <p id={el.id} className={el.done ? "subTaskdone" : ""}>
           - {el.subtask} - id - {el.id}
         </p>
       ))}

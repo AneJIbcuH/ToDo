@@ -9,17 +9,26 @@ const HomeTodo: React.FC = () => {
   const [nameTask, setNameTask] = useState<string>("");
   const [textTask, setTextTask] = useState<string>("");
   const [statusTask, setStatusTask] = useState<string>("");
-  const [dragId, setDragId] = useState<number>()
-
+  const [dragId, setDragId] = useState<number>();
   const tasks = useSelector((state: Task[]) => state);
-  const dispatch = useDispatch();
+  const [myFilter, setMyFilter] = useState("");
 
+  const arrTasks = tasks.filter((task, index) => {
+    return (
+      task.title.toLocaleLowerCase().includes(myFilter.toLocaleLowerCase()) ||
+      index == Number(myFilter) - 1
+    );
+  });
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const createNewTask = () => {
     setIsModalOpen(true);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   const addTask = () => {
@@ -30,7 +39,7 @@ const HomeTodo: React.FC = () => {
       description: textTask,
       dateCreat: new Date(Date.now()).toLocaleString(),
       subTasks: [],
-      status: statusTask,
+      status: "queue",
     };
 
     const addItemAction: Action = {
@@ -44,12 +53,8 @@ const HomeTodo: React.FC = () => {
     setStatusTask("");
   };
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   function dragStart(e) {
-    setDragId(Number(e.target.id))
+    setDragId(Number(e.target.id));
     console.log("start");
     console.log(e.target.id);
     console.log(e.target.parentNode.className);
@@ -59,11 +64,15 @@ const HomeTodo: React.FC = () => {
     e.preventDefault();
     console.log("drop");
     console.log(e.currentTarget.className);
-    // вытянуть айди из стейта и сменить глобал стейт
     let mydDragTask: dragTask = {
       id: dragId,
-      status: e.currentTarget.className
+      status: e.currentTarget.className,
+    };
+
+    if (e.currentTarget.className === "done") {
+      mydDragTask.timeEndDev = Date.now();
     }
+
     const DragItemAction: Action = {
       type: ActionTypes.DRAG_ITEM,
       payload: mydDragTask,
@@ -71,11 +80,11 @@ const HomeTodo: React.FC = () => {
     dispatch(DragItemAction);
   }
 
-  function dragEnd(e) {
-    console.log("dragend");
-    console.log(e.target.id);
-    // e.target.style.boxShadow = "none";
-  }
+  // function dragEnd(e) {
+  //   console.log("dragend");
+  //   console.log(e.target.id);
+  //   e.target.style.boxShadow = "none";
+  // }
 
   // function dragLeave(e) {
   //   e.target.style.boxShadow = "none";
@@ -94,6 +103,11 @@ const HomeTodo: React.FC = () => {
       <Button type="primary" onClick={createNewTask}>
         Добавить задачу
       </Button>
+      <TextArea
+        placeholder="Фильтр по заголовку"
+        autoSize
+        onChange={(e) => setMyFilter(e.target.value)}
+      />
       <Modal
         title="Добавление задачи"
         open={isModalOpen}
@@ -114,27 +128,14 @@ const HomeTodo: React.FC = () => {
           onChange={(e) => setTextTask(e.target.value)}
         />
         <div style={{ margin: "24px 0" }} />
-        <TextArea
-          placeholder="Статус"
-          autoSize
-          value={statusTask}
-          onChange={(e) => setStatusTask(e.target.value)}
-        />
       </Modal>
-      {/* {tasks?.map((task: Task) => (
-          <div
-            className="task"
-            id={String(task.id)}
-            onClick={() => navigate(`/task/${task.id}`)}
-          >
-            <p>№{tasks.indexOf(task) + 1}</p>
-            <p>{task.title}</p>
-            <p>{task.description}</p>
-          </div>
-        ))} */}
       <div className="status">
-        <div className="queue">
-          {tasks?.map((task: Task) => {
+        <div
+          className="queue"
+          onDragOver={(e) => dragOver(e)}
+          onDrop={(e) => dragDrop(e)}
+        >
+          {arrTasks?.map((task: Task) => {
             if (task.status == "queue") {
               return (
                 <div
@@ -143,12 +144,10 @@ const HomeTodo: React.FC = () => {
                   onClick={() => navigate(`/task/${task.id}`)}
                   draggable={true}
                   onDragStart={(e) => dragStart(e)}
-                  // onDragOver={(e) => dragOver(e)}
                   // onDragLeave={(e) => dragLeave(e)}
                   // onDragEnd={(e) => dragEnd(e)}
-                  // onDrop={e => dragDrop(e)}
                 >
-                  <p>№{tasks.indexOf(task) + 1}</p>
+                  <p>№{arrTasks.indexOf(task) + 1}</p>
                   <p>{task.title}</p>
                   <p>{task.description}</p>
                 </div>
@@ -160,18 +159,18 @@ const HomeTodo: React.FC = () => {
           className="development"
           onDragOver={(e) => dragOver(e)}
           onDrop={(e) => dragDrop(e)}
-          // onDragLeave={(e) => dragLeave(e)}
-          // onDragEnd={(e) => dragEnd(e)}
         >
-          {tasks?.map((task: Task) => {
+          {arrTasks?.map((task: Task) => {
             if (task.status == "development") {
               return (
                 <div
                   className="task"
                   id={String(task.id)}
                   onClick={() => navigate(`/task/${task.id}`)}
+                  draggable={true}
+                  onDragStart={(e) => dragStart(e)}
                 >
-                  <p>№{tasks.indexOf(task) + 1}</p>
+                  <p>№{arrTasks.indexOf(task) + 1}</p>
                   <p>{task.title}</p>
                   <p>{task.description}</p>
                 </div>
@@ -184,15 +183,17 @@ const HomeTodo: React.FC = () => {
           onDragOver={(e) => dragOver(e)}
           onDrop={(e) => dragDrop(e)}
         >
-          {tasks?.map((task: Task) => {
+          {arrTasks?.map((task: Task) => {
             if (task.status == "done") {
               return (
                 <div
                   className="task"
                   id={String(task.id)}
                   onClick={() => navigate(`/task/${task.id}`)}
+                  draggable={true}
+                  onDragStart={(e) => dragStart(e)}
                 >
-                  <p>№{tasks.indexOf(task) + 1}</p>
+                  <p>№{arrTasks.indexOf(task) + 1}</p>
                   <p>{task.title}</p>
                   <p>{task.description}</p>
                 </div>
