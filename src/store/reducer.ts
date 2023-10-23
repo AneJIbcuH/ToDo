@@ -26,7 +26,8 @@ const reducer = (state = initialState, action: Action): Task[] => {
         if (item.id === action.payload.id) {
           return {
             ...item,
-            status: action.payload.status
+            status: action.payload.status,
+            timeEndDev: action.payload.timeEndDev,
           };
         }
         return item;

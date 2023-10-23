@@ -6,7 +6,8 @@ export type subTask = {
 
 export type dragTask = {
   id: number,
-  status: string
+  status: string,
+  timeEndDev?: number;
 }
 
 export type Task = {
@@ -15,8 +16,7 @@ export type Task = {
   description: string;
   dateCreat: string;
   subTasks: subTask[];
-  timeInDev?: string;
-  timeEndDev?: string;
+  timeEndDev?: number;
   status?: string;
 };
 
