@@ -100,11 +100,11 @@ const HomeTodo: React.FC = () => {
 
   return (
     <div className="taskList">
-      <Button type="primary" onClick={createNewTask}>
+      <Button type="primary" onClick={createNewTask} className="btn">
         Добавить задачу
       </Button>
       <TextArea
-        placeholder="Фильтр по заголовку"
+        placeholder="Фильтр по заголовку или номеру задачи"
         autoSize
         onChange={(e) => setMyFilter(e.target.value)}
       />

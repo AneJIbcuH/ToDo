@@ -93,12 +93,14 @@ const MyTask: React.FC = () => {
         icon={<BarsOutlined />}
         size="large"
         onClick={() => navigate("/")}
+        className="btn"
       ></Button>
       <Button
         type="text"
         onClick={openModalChangeTask}
         icon={<EditOutlined />}
         size="large"
+        className="btn"
       ></Button>
       <Modal
         title="Измение задачи"

@@ -31,6 +31,8 @@ body {
 .taskList textarea {
     width: 300px;
     margin: 10px 0;
+    background: #2a9d8f;
+    border: none;
 }
 
 .subTaskdone {
@@ -41,32 +43,34 @@ body {
 .status {
     background: #264653;
     width: 100%;
-    /* min-height: 300px; */
-    border: #f4a261 solid;
     display: flex;
-    
-    /* flex-wrap: wrap; */
-    align-items: flex-start;
-    justify-content: flex-start;
 }
 
 .queue {
     background: #f4a261;
-    width: 33%;
+    width: 30%;
     min-height: 250px;
     border-radius: 15px;
 }
 
 .development {
     background: #e76f51;
-    width: 33%;
+    width: 30%;
     min-height: 250px;
     border-radius: 15px;
 }
 
 .done {
     background: #e9c46a;
-    width: 33%;
+    width: 30%;
     min-height: 250px;
     border-radius: 15px;
+}
+
+.btn {
+    background: #e9c46a;
+}
+
+.btn :hover {
+    color: #e76f51;
 }
