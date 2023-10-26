@@ -1,10 +1,12 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import itemsReducer from './reducer';
+import reducer from './reducer';
+import localStorageMiddleware from './localStorageMiddleware';
 
 const rootReducer = combineReducers({
   items: itemsReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(reducer, rootReducer, applyMiddleware(localStorageMiddleware));
 
 export default store;
