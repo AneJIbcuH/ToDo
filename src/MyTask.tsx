@@ -6,6 +6,7 @@ import { Action, ActionTypes, Task, subTask } from "./store/types";
 import { DeleteOutlined, EditOutlined, BarsOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import moment from "moment";
+import CommentContainer from "./CommentContainer";
 
 const MyTask: React.FC = () => {
   const navigate = useNavigate();
@@ -86,6 +87,44 @@ const MyTask: React.FC = () => {
     setNewSubTasks(task?.subTasks);
   };
 
+  const comments = [
+    {
+      id: 1,
+      text: "корневой",
+      children: [2, 3],
+    },
+    {
+      id: 2,
+      text: "ответ на корненой",
+      children: [4],
+    },
+    {
+      id: 3,
+      text: "еще один ответ на комментарий",
+      children: [],
+    },
+    {
+      id: 4,
+      text: "ответ на ответ",
+      children: [],
+    },
+    {
+      id: 5,
+      text: "корневой 2",
+      children: [6],
+    },
+    {
+      id: 6,
+      text: "ответ на корневой 2",
+      children: [7],
+    },
+    {
+      id: 7,
+      text: "ответ на ответ корневого 2",
+      children: [],
+    },
+  ];
+
   return (
     <div className="taskList">
       <Button
@@ -163,7 +202,10 @@ const MyTask: React.FC = () => {
       <p>Описание: {task?.description}</p>
       <p>Статус: {task?.status}</p>
       {task?.status == "done" ? (
-        <p>Задача была выполнена : {new Date(task?.timeEndDev).toLocaleString()} за {(task?.timeEndDev - task.id) / 1000} секунд</p>
+        <p>
+          Задача была выполнена : {new Date(task?.timeEndDev).toLocaleString()}{" "}
+          за {(task?.timeEndDev - task.id) / 1000} секунд
+        </p>
       ) : (
         <p>Задача в работе : {moment(task?.id).fromNow().slice(0, -3)}</p>
       )}
@@ -173,6 +215,7 @@ const MyTask: React.FC = () => {
           - {el.subtask} - id - {el.id}
         </p>
       ))}
+      <CommentContainer comments={comments} />
     </div>
   );
 };

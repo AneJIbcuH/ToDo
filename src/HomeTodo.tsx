@@ -80,22 +80,8 @@ const HomeTodo: React.FC = () => {
     dispatch(DragItemAction);
   }
 
-  // function dragEnd(e) {
-  //   console.log("dragend");
-  //   console.log(e.target.id);
-  //   e.target.style.boxShadow = "none";
-  // }
-
-  // function dragLeave(e) {
-  //   e.target.style.boxShadow = "none";
-  // }
-
   function dragOver(e) {
     e.preventDefault();
-    // console.log(e.currentTarget.className);
-    // if (e.target.className == "task") {
-    //   e.target.style.boxShadow = "0 10px 10px black";
-    // }
   }
 
   return (
@@ -135,6 +121,7 @@ const HomeTodo: React.FC = () => {
           onDragOver={(e) => dragOver(e)}
           onDrop={(e) => dragDrop(e)}
         >
+          <p>В очереди</p>
           {arrTasks?.map((task: Task) => {
             if (task.status == "queue") {
               return (
@@ -144,8 +131,6 @@ const HomeTodo: React.FC = () => {
                   onClick={() => navigate(`/task/${task.id}`)}
                   draggable={true}
                   onDragStart={(e) => dragStart(e)}
-                  // onDragLeave={(e) => dragLeave(e)}
-                  // onDragEnd={(e) => dragEnd(e)}
                 >
                   <p>№{arrTasks.indexOf(task) + 1}</p>
                   <p>{task.title}</p>
@@ -160,6 +145,7 @@ const HomeTodo: React.FC = () => {
           onDragOver={(e) => dragOver(e)}
           onDrop={(e) => dragDrop(e)}
         >
+          <p>В разработке</p>
           {arrTasks?.map((task: Task) => {
             if (task.status == "development") {
               return (
@@ -183,6 +169,7 @@ const HomeTodo: React.FC = () => {
           onDragOver={(e) => dragOver(e)}
           onDrop={(e) => dragDrop(e)}
         >
+          <p>Выполнено</p>
           {arrTasks?.map((task: Task) => {
             if (task.status == "done") {
               return (

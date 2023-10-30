@@ -35,6 +35,11 @@ body {
     border: none;
 }
 
+.taskList p {
+    text-align: center;
+    color: #2a9d8f;
+}
+
 .subTaskdone {
     color: #f4a261;
     text-decoration: line-through;
@@ -74,3 +79,40 @@ body {
 .btn :hover {
     color: #e76f51;
 }
+
+.com {
+    border: #e76f51 solid 3px;
+    border-radius: 5px;
+    margin: 0 0 5px 100px;
+    width: 220px;
+    height: 80px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.com0 {
+    /* border: #e9c46a solid 3px; */
+    margin-left: 45px;
+}
+
+.com1 {
+    /* border: #f4a261 solid 3px; */
+    /* margin-left: 15px; */
+}
+
+.commentShow {
+    display: none;
+}
+
+.comment {
+    border: solid 3px #f4a261;
+    margin: 5px 2px 10px 50px;
+}
+
+.comment p {
+    text-align: left; 
+}
+
+/* .comments {
+    border: solid 3px #e9c46a;
+} */
