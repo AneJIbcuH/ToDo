@@ -25,6 +25,7 @@ export enum ActionTypes {
   CHANGE_ITEM = 'CHANGE_ITEM',
   REMOVE_ITEM = "REMOVE_ITEM",
   DRAG_ITEM = "DRAG_ITEM",
+  LOCALE_STORAGE = "LOCALE_STORAGE"
 }
 
 export type AddItemAction = {
@@ -47,4 +48,9 @@ export type DragItemAction = {
   payload: dragTask; // id status
 };
 
-export type Action = AddItemAction | ChangeItemAction | RemoveItemAction | DragItemAction
+export type LocaleStorageAction = {
+  type: ActionTypes.LOCALE_STORAGE;
+  payload: Task[]; // 
+};
+
+export type Action = AddItemAction | ChangeItemAction | RemoveItemAction | DragItemAction | LocaleStorageAction
